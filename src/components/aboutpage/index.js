@@ -1,0 +1,1 @@
+export {Aboutpage} from "./aboutpage"
