@@ -9,15 +9,21 @@ const { Header, Content, Footer } = Layout;
 class App extends React.Component { 
 
   render() {
-    const routs = {
+    const routes = {
       '/' : '1',
       '/about': '2'
+    }
+
+    let selectedKye = ['1'];
+
+    if(this.props.location.pathname && routes[this.props.location.pathname]) {
+      selectedKye = [routes[this.props.location.pathname]];
     }
 
     return <Layout>
       <Header style={{ position: 'fixed', zIndex: 1, width: '100%' }}>
         <div className="logo" />
-        <Menu theme="dark" mode="horizontal" defaultSelectedKeys={[this.props.location.pathname && routs[this.props.location.pathname] ? routs[this.props.location.pathname] : '1']}>
+        <Menu theme="dark" mode="horizontal" defaultSelectedKeys={selectedKye}>
           <Menu.Item key="1">
             <Link to="/">
               Главная
