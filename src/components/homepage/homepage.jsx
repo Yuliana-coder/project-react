@@ -1,12 +1,25 @@
 import React, { useState } from "react";
-import { Typography, Input, Form, Button, Space, DatePicker } from "antd";
+import { Typography, Input, Form, Button, DatePicker } from "antd";
 import moment from 'moment';
 
 function disabledDate(current) {
     return current && current.valueOf() < Date.now() - Math.pow(60,4);
 }
 
-export function Homepage() { 
+function getDefaultTime() {
+    const time = new Date();
+    if(time.getMinutes() <= 30) {
+        return `${time.getHours()}:30`;
+    }else{
+        let hours = (time.getHours() + 1) % 24;
+        if(hours.toString().length == 1) {
+            hours = `0${hours}`
+        }
+        return `${hours}:00`;
+    }
+}
+
+export function HomePage() { 
     let [userName, setUserName] = useState('')
     let [date, setDate] = useState(0)
     let [showMessage, setShowMessage] = useState('');
@@ -43,11 +56,12 @@ export function Homepage() {
                         format={'YYYY-MM-DD HH:mm'}
                         disabledDate={disabledDate}
                         minuteStep={30}
-                        onChange={(event) => setDate(event._d)} showTime />
+                        onChange={(event) => setDate(event._d)}
+                        showTime={{ defaultValue: moment(getDefaultTime(), 'HH:mm:ss') }} />
                 </Form.Item>
 
                 <Form.Item wrapperCol={{ offset: 8, span: 16 }}>
-                    <Button onClick={() => { setShowMessage(userName + ', ' + 'Вы успешно записаны на стирку. Дата: ' + date) }} type="primary" htmlType="submit">
+                    <Button onClick={() => { setShowMessage(`${userName}, Вы успешно записаны на стирку. Дата: ${date}`) }} type="primary" htmlType="submit">
                     Записаться!
                     </Button>
                 </Form.Item>

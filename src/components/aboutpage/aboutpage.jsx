@@ -1,50 +1,62 @@
 import React, { useState, useEffect } from "react";
 import axios from 'axios'
-import { Typography } from "antd";
+import { Typography, Space } from "antd";
+
+function getUser() {
+    return new Promise()
+}
 
 const useGithubData = (userName) => {
-    const [userData, setUserData] = useState([]);
-    const token = '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';
+    const [userData, setUserData] = useState({});
+    const token = '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';
 
     useEffect(() => {
         if (!userName) return;
-        const fetchData = async () => {
-            const response = await axios(
-                'https://api.github.com/users/' + userName,
-                    {
-                        headers: {
-                        "Authorization": "token "+ token
-                    }
-                }
-            );
-            console.log(response.data);
-            setUserData(response.data);
-        };
+        const url = 'https://api.github.com/users/' + userName;
+        const promise = axios(url, {
+            headers: {
+                "Authorization": "token "+ token
+            }
+        });
 
-        fetchData();
+        promise.then((response) => {
+            setUserData(response.data);
+        }).catch((error) => {
+            throw new Error(error);
+        }) 
+
     }, [userName]);
 
     return userData;
 }
 
-export function Aboutpage() {
+export function AboutPage() {
     const profileData = useGithubData('yuliana-coder');
 
     return <div >
     <Typography.Title>
         О нас
     </Typography.Title>
-        <Typography.Text>
-            Студент группы М05-116б. Ссылка на гитхаб 
-        </Typography.Text>
-        <Typography.Link href="https://github.com/Yuliana-coder" target="_blank">
-            Github
-        </Typography.Link>
+        <Space>
+            <Typography.Text>
+                Студент группы М05-116б. Ссылка на гитхаб
+            </Typography.Text>
+            <Typography.Link href="https://github.com/Yuliana-coder" target="_blank">
+                Github
+            </Typography.Link>
+        </Space>
+        {profileData ?
         <div>
-            <Typography.Text strong>Логин github</Typography.Text> {profileData.login}
+            {profileData.login ?<div>
+                <Typography.Text strong={true}>Логин github</Typography.Text> {profileData.login}
+            </div>
+            : null}
+            {profileData.bio ?
+            <div>
+                <Typography.Text strong={true}>BIO github</Typography.Text> {profileData.bio}
+            </div>
+            : null}
         </div>
-        <div>
-            <Typography.Text strong>BIO github</Typography.Text> {profileData.bio}
-        </div>
+        : null}
     </div>;
 }
