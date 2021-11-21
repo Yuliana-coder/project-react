@@ -1,7 +1,7 @@
 import { Layout, Menu } from 'antd';
 import { Link, Route, Switch, withRouter } from 'react-router-dom'
-import { HomePage } from "./components/homepage"
-import { AboutPage } from "./components/aboutpage"
+import { HomePage } from "./components/HomePage"
+import { AboutPage } from "./components/AboutPage"
 import React from "react";
 
 const { Header, Content, Footer } = Layout;
