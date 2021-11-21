@@ -1,7 +1,7 @@
-import { Layout, Menu, Typography } from 'antd';
+import { Layout, Menu } from 'antd';
 import { Link, Route, Switch, withRouter } from 'react-router-dom'
-import { Homepage } from "./components/homepage"
-import { Aboutpage } from "./components/aboutpage"
+import { HomePage } from "./components/HomePage"
+import { AboutPage } from "./components/AboutPage"
 import React from "react";
 
 const { Header, Content, Footer } = Layout;
@@ -40,10 +40,10 @@ class App extends React.Component {
         <div className="main-container">
           <Switch>
             <Route path='/about'>
-              <Aboutpage />
+              <AboutPage />
             </Route>
             <Route path='/'>
-              <Homepage />
+              <HomePage />
             </Route>
           </Switch>
         </div>
